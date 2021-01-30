@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 class MainRepository {
-  Future<List<PlayArenaModel>> getArenaList() async {
+  Future<List<PlayArenaModel>> getArenaList(int limit) async {
     try {
-      var response = await http.get(getArena);
+      var response = await http.get("$getArena$limit");
       if (response.statusCode == 200) {
         final _playArenaModel = playArenaModelFromJson(response.body);
         return _playArenaModel;

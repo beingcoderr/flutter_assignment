@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_assignment/Models/playArenaModel.dart';
@@ -9,13 +11,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final _scrollContoller = ScrollController();
   final _mainRepo = MainRepository();
-  Future<List<PlayArenaModel>> _playArenaList;
+  final _streamController = StreamController<List<PlayArenaModel>>();
+  Stream<List<PlayArenaModel>> _playArenaList;
+  int _iniCount = 10;
 
   @override
   void initState() {
     super.initState();
-    _playArenaList = _mainRepo.getArenaList();
+    _playArenaList = _mainRepo.getArenaList(_iniCount).asStream();
+    _streamController.addStream(_playArenaList);
+    _scrollContoller.addListener(() async {
+      if (_scrollContoller.position.atEdge) {
+        if (_scrollContoller.position.pixels == 0) {
+          debugPrint("at top");
+        } else {
+          debugPrint("reached last");
+          _iniCount += 10;
+          debugPrint(_iniCount.toString());
+          final _newPlayArenaList = await _mainRepo.getArenaList(_iniCount);
+          _streamController.add(_newPlayArenaList);
+        }
+      }
+    });
   }
 
   @override
@@ -30,8 +49,8 @@ class _HomeState extends State<Home> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FutureBuilder<List<PlayArenaModel>>(
-              future: _playArenaList,
+          StreamBuilder<List<PlayArenaModel>>(
+              stream: _streamController.stream,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Expanded(
@@ -52,6 +71,7 @@ class _HomeState extends State<Home> {
                     snapshot.connectionState != ConnectionState.waiting) {
                   return Expanded(
                     child: ListView.builder(
+                      controller: _scrollContoller,
                       itemCount: snapshot.data.length,
                       physics: AlwaysScrollableScrollPhysics(),
                       shrinkWrap: true,
