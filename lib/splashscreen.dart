@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.center,
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 200),
               width: _blueVisible ? 250 : 0,
               child: Padding(
                 padding: const EdgeInsets.only(right: 70.0, top: 70),
@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.center,
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 200),
               width: _orangeVisible ? 200 : 0,
               child: Padding(
                 padding: const EdgeInsets.only(right: 50.0, bottom: 25),
@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.center,
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 200),
               width: _purpleVisible ? 250 : 0,
               child: Padding(
                 padding: const EdgeInsets.only(left: 70.0, top: 70),
@@ -96,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.center,
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 200),
               width: _redVisible ? 250 : 0,
               child: Padding(
                 padding: const EdgeInsets.only(left: 50.0, bottom: 50),

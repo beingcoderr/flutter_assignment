@@ -19,6 +19,7 @@ class MainRepository {
       Get.snackbar(
         'No internet connection',
         "Unable to reach our servers",
+        snackPosition: SnackPosition.BOTTOM,
       );
     }
     return null;
